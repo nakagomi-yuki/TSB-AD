@@ -265,3 +265,7 @@ We appreciate the following github repos a lot for their valuable code base:
 * https://github.com/TimeEval/TimeEval-algorithms
 * https://github.com/thuml/Time-Series-Library/
 * https://github.com/dawnvince/EasyTSAD
+
+
+ChronosはPyTorchのバージョンが古くて使えない。2.6は欲しいが、現在は2.3とかでこれがそもそもオリジナルの設定だから崩すのも憚られる。
+

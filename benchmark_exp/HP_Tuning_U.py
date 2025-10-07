@@ -44,8 +44,18 @@ if __name__ == '__main__':
     combinations = [dict(zip(keys, v)) for v in itertools.product(*values)]
 
     write_csv = []
-    for filename in file_list:
-        print('Processing:{} by {}'.format(filename, args.AD_Name))
+    total_files = len(file_list)
+    total_combinations = len(combinations)
+    total_tasks = total_files * total_combinations
+    
+    print(f'Total files: {total_files}')
+    print(f'Total parameter combinations: {total_combinations}')
+    print(f'Total tasks: {total_tasks}')
+    print('=' * 50)
+    
+    current_task = 0
+    for file_idx, filename in enumerate(file_list):
+        print(f'Processing file {file_idx+1}/{total_files}: {filename} by {args.AD_Name}')
 
         file_path = os.path.join(args.dataset_dir, filename)
         df = pd.read_csv(file_path).dropna()
@@ -59,7 +69,10 @@ if __name__ == '__main__':
         train_index = filename.split('.')[0].split('_')[-3]
         data_train = data[:int(train_index), :]
 
-        for params in combinations:
+        for param_idx, params in enumerate(combinations):
+            current_task += 1
+            progress = (current_task / total_tasks) * 100
+            print(f'  Task {current_task}/{total_tasks} ({progress:.1f}%) - Parameter set {param_idx+1}/{total_combinations}')
 
             if args.AD_Name in Semisupervise_AD_Pool:
                 output = run_Semisupervise_AD(args.AD_Name, data_train, data, **params)
@@ -70,7 +83,7 @@ if __name__ == '__main__':
                 
             try:
                 evaluation_result = get_metrics(output, label, slidingWindow=slidingWindow)
-                print('evaluation_result: ', evaluation_result)
+                print(f'    evaluation_result: {evaluation_result}')
                 list_w = list(evaluation_result.values())
             except:
                 list_w = [0]*9
@@ -85,3 +98,6 @@ if __name__ == '__main__':
             w_csv = pd.DataFrame(write_csv, columns=col_w)
 
             w_csv.to_csv(f'{args.save_dir}/{args.AD_Name}.csv', index=False)
+        
+        print(f'Completed file {file_idx+1}/{total_files}: {filename}')
+        print('-' * 50)

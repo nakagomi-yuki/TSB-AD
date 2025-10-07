@@ -1,7 +1,68 @@
-__pycache__
-*.egg-info
-build
-run_scripts
-Datasets/TSB-AD-Datasets
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data files (large datasets should be downloaded separately)
+Datasets/TSB-AD-U/*.csv
+Datasets/TSB-AD-M/*.csv
+Datasets/TSB-AD-Datasets/
+
+# Results and outputs
+benchmark_exp/eval/
+benchmark_exp/tuning_results/
+benchmark_exp/tuning_results_v2/
+benchmark_exp/AImaked/
+eval/
+
+# Logs
+*.log
+*.out
+nohup.out
+benchmark_exp/*.log
+benchmark_exp/*.out
+benchmark_exp/nohup_sequential.out
+
+# Job scripts output
+*.e[0-9]*
+*.o[0-9]*
+benchmark_exp/*.e[0-9]*
+benchmark_exp/*.o[0-9]*
+
+# Temporary files
+run_scripts/
+*.tmp
+*.bak
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
 TSB_AD/models/NormA.py
 TSB_AD/models/Series2Graph.py
+autogluon/
+pyrightconfig.json
+test.py

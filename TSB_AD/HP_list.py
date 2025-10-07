@@ -232,6 +232,12 @@ Uni_algo_HP_dict = {
     },
     'MOMENT_FT': {
         'win_size': [64, 128, 256]
+    },
+    'FrequencyBasedAD': {
+        'periodicity': [1],
+        'stride_ratio': [0.01],
+        'error_tolerance': [0.1, 0.25, 0.4],
+        'min_frequency': [0.1, 0.25, 0.4]
     }
 }
 
@@ -271,5 +277,6 @@ Optimal_Uni_algo_HP_dict = {
     'TimesFM': {'win_size': 96},
     'MOMENT_ZS': {'win_size': 64},
     'MOMENT_FT': {'win_size': 64},
-    'M2N2': {}
+    'M2N2': {},
+    'FrequencyBasedAD': {'periodicity': 1, 'stride_ratio': 0.01, 'error_tolerance': 0.4, 'min_frequency': 0.4}
 }

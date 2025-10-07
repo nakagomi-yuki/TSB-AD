@@ -3,7 +3,7 @@ import math
 from .utils.slidingWindows import find_length_rank
 
 Unsupervise_AD_Pool = ['FFT', 'SR', 'NORMA', 'Series2Graph', 'Sub_IForest', 'IForest', 'LOF', 'Sub_LOF', 'POLY', 'MatrixProfile', 'Sub_PCA', 'PCA', 'HBOS', 
-                        'Sub_HBOS', 'KNN', 'Sub_KNN','KMeansAD', 'KMeansAD_U', 'KShapeAD', 'COPOD', 'CBLOF', 'COF', 'EIF', 'RobustPCA', 'Lag_Llama', 'TimesFM', 'Chronos', 'MOMENT_ZS']
+                        'Sub_HBOS', 'KNN', 'Sub_KNN','KMeansAD', 'KMeansAD_U', 'KShapeAD', 'COPOD', 'CBLOF', 'COF', 'EIF', 'RobustPCA', 'Lag_Llama', 'TimesFM', 'Chronos', 'MOMENT_ZS', 'FrequencyBasedAD']
 Semisupervise_AD_Pool = ['Left_STAMPi', 'SAND', 'MCD', 'Sub_MCD', 'OCSVM', 'Sub_OCSVM', 'AutoEncoder', 'CNN', 'LSTMAD', 'TranAD', 'USAD', 'OmniAnomaly', 
                         'AnomalyTransformer', 'TimesNet', 'FITS', 'Donut', 'OFA', 'MOMENT_FT', 'M2N2']
 
@@ -90,6 +90,8 @@ def run_MatrixProfile(data, periodicity=1, n_jobs=1):
     clf.fit(data)
     score = clf.decision_scores_
     return score.ravel()
+
+
 
 def run_Left_STAMPi(data_train, data):
     from .models.Left_STAMPi import Left_STAMPi
@@ -403,4 +405,18 @@ def run_M2N2(
     )
     clf.fit(data_train)
     score = clf.decision_function(data_test)
+    return score.ravel()
+
+def run_FrequencyBasedAD(data, periodicity=1, stride_ratio=0.1, 
+                        error_tolerance=0.01, min_frequency=0.01):
+    from .models.FrequencyBasedAD import FrequencyBasedAD
+    
+    clf = FrequencyBasedAD(
+        periodicity=periodicity,
+        stride_ratio=stride_ratio,
+        error_tolerance=error_tolerance,
+        min_frequency=min_frequency
+    )
+    clf.fit(data)
+    score = clf.decision_scores_
     return score.ravel()

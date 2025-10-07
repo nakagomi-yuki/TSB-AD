@@ -35,12 +35,15 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default='eval/metrics/uni/')
     parser.add_argument('--save', type=bool, default=False)
     parser.add_argument('--AD_Name', type=str, default='IForest')
+    # 出力ディレクトリ名にサフィックスを追加
+    parser.add_argument('--output_suffix', type=str, default='', help='Suffix for output directory')
     args = parser.parse_args()
 
-
-    target_dir = os.path.join(args.score_dir, args.AD_Name)
+    # 出力ディレクトリ名にサフィックスを追加
+    output_name = args.AD_Name + args.output_suffix
+    target_dir = os.path.join(args.score_dir, output_name)
     os.makedirs(target_dir, exist_ok = True)
-    logging.basicConfig(filename=f'{target_dir}/000_run_{args.AD_Name}.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename=f'{target_dir}/000_run_{output_name}.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     file_list = pd.read_csv(args.file_lsit)['file_name'].values
     Optimal_Det_HP = Optimal_Uni_algo_HP_dict[args.AD_Name]
@@ -98,4 +101,4 @@ if __name__ == '__main__':
             col_w.insert(0, 'Time')
             col_w.insert(0, 'file')
             w_csv = pd.DataFrame(write_csv, columns=col_w)
-            w_csv.to_csv(f'{args.save_dir}/{args.AD_Name}.csv', index=False)
+            w_csv.to_csv(f'{args.save_dir}/{output_name}.csv', index=False)
